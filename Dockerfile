@@ -23,6 +23,7 @@ RUN apt-get update \
     && sed -i 's/http:\/\/repo1.maven.org\/maven2/https:\/\/repo1.maven.org\/maven2/g' pom.xml \
     && export MAVEN_OPTS="-Xms2g -Xmx2g" \
     && export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" \
+    &&  mvn -Dmaven.repo.local=/mvn-repo install:install-file -DgroupId=javax.jms -DartifactId=jms -Dversion=1.1 -Dpackaging=jar -Dfile=jms-1.1.jar \
     && mvn clean -Dmaven.repo.local=/mvn-repo -Dhttps.protocols=TLSv1.2 -DskipTests package -Pdist,external-hbase-solr \
     && tar -xzvf /atlas-src/distro/target/apache-atlas-${VERSION}-server.tar.gz -C /opt 
 
