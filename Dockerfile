@@ -32,23 +32,23 @@ RUN apt-get update \
 
 VOLUME ["/opt/apache-atlas-${VERSION}/conf", "/opt/apache-atlas-${VERSION}/logs"]
 
-COPY atlas_start.py.patch atlas_config.py.patch /opt/apache-atlas-${VERSION}/bin/
+#COPY atlas_start.py.patch atlas_config.py.patch /opt/apache-atlas-${VERSION}/bin/
 
-RUN cd /opt/apache-atlas-${VERSION}/bin \
-    && patch -b -f < atlas_start.py.patch \
-    && patch -b -f < atlas_config.py.patch
+#RUN cd /opt/apache-atlas-${VERSION}/bin \
+#    && patch -b -f < atlas_start.py.patch \
+#    && patch -b -f < atlas_config.py.patch
 
-COPY conf/hbase/hbase-site.xml.template /opt/apache-atlas-${VERSION}/conf/hbase/hbase-site.xml.template
-COPY conf/atlas-env.sh /opt/apache-atlas-${VERSION}/conf/atlas-env.sh
+#COPY conf/hbase/hbase-site.xml.template /opt/apache-atlas-${VERSION}/conf/hbase/hbase-site.xml.template
+#COPY conf/atlas-env.sh /opt/apache-atlas-${VERSION}/conf/atlas-env.sh
 
-COPY conf/gremlin /opt/gremlin/
+#COPY conf/gremlin /opt/gremlin/
 
-RUN cd /opt/apache-atlas-${VERSION} \
-    && ./bin/atlas_start.py -setup || true
+#RUN cd /opt/apache-atlas-${VERSION} \
+#    && ./bin/atlas_start.py -setup || true
 
-RUN cd /opt/apache-atlas-${VERSION} \
-    && ./bin/atlas_start.py & \
-    touch /opt/apache-atlas-${VERSION}/logs/application.log \
-    && tail -f /opt/apache-atlas-${VERSION}/logs/application.log | sed '/AtlasAuthenticationFilter.init(filterConfig=null)/ q' \
-    && sleep 10 \
-    && /opt/apache-atlas-${VERSION}/bin/atlas_stop.py
+#RUN cd /opt/apache-atlas-${VERSION} \
+#    && ./bin/atlas_start.py & \
+#    touch /opt/apache-atlas-${VERSION}/logs/application.log \
+#    && tail -f /opt/apache-atlas-${VERSION}/logs/application.log | sed '/AtlasAuthenticationFilter.init(filterConfig=null)/ q' \
+#    && sleep 10 \
+#    && /opt/apache-atlas-${VERSION}/bin/atlas_stop.py
