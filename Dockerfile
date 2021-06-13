@@ -3,6 +3,8 @@ FROM ubuntu:18.04
 LABEL maintainer="vadim@clusterside.com"
 ARG VERSION=2.1.0
 ADD ./jms-1.1.jar /jms-1.1.jar
+ADD ./ring-cors-0.1.5.jar /ring-cors-0.1.5.jar
+
 RUN apt-get update \
     && apt-get -y upgrade \
     && apt-get -y install apt-utils \
@@ -23,6 +25,7 @@ RUN apt-get update \
     && sed -i 's/http:\/\/repo1.maven.org\/maven2/https:\/\/repo1.maven.org\/maven2/g' pom.xml \
     && export MAVEN_OPTS="-Xms2g -Xmx2g" \
     && export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" \
+    &&  mvn -Dmaven.repo.local=/mvn-repo install:install-file -DgroupId=ring-cors -DartifactId=ring-cors -Dversion=0.1.5 -Dpackaging=jar -Dfile=/ring-cors-0.1.5.jar \
     &&  mvn -Dmaven.repo.local=/mvn-repo install:install-file -DgroupId=javax.jms -DartifactId=jms -Dversion=1.1 -Dpackaging=jar -Dfile=/jms-1.1.jar \
     && mvn clean -Dmaven.repo.local=/mvn-repo -Dhttps.protocols=TLSv1.2 -DskipTests package -Pdist,external-hbase-solr \
     && tar -xzvf /atlas-src/distro/target/apache-atlas-${VERSION}-server.tar.gz -C /opt 
