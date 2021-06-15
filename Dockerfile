@@ -27,7 +27,7 @@ RUN apt-get update \
     && export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64" \
     &&  mvn -Dmaven.repo.local=/mvn-repo install:install-file -DgroupId=ring-cors -DartifactId=ring-cors -Dversion=0.1.5 -Dpackaging=jar -Dfile=/ring-cors-0.1.5.jar \
     &&  mvn -Dmaven.repo.local=/mvn-repo install:install-file -DgroupId=javax.jms -DartifactId=jms -Dversion=1.1 -Dpackaging=jar -Dfile=/jms-1.1.jar \
-    && mvn clean -Dmaven.repo.local=/mvn-repo -Dhttps.protocols=TLSv1.2 -DskipTests package -Pdist,external-hbase-solr \
+    && mvn clean -Dmaven.repo.local=/mvn-repo -Dhttps.protocols=TLSv1.2 -DskipTests package -Pdist \
     && tar -xzvf /atlas-src/distro/target/apache-atlas-${VERSION}-server.tar.gz -C /opt 
 
 VOLUME ["/opt/apache-atlas-${VERSION}/conf", "/opt/apache-atlas-${VERSION}/logs"]
